@@ -1,0 +1,74 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Skystore{% endblock %}</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV SECTION -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Skystore</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Каталог</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- END NAV SECTION -->
+
+{% block content %}{% endblock %}
+
+<!-- FOOTER SECTION -->
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>SkyStore &copy; 2023</h5>
+                <p>Skystore — это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать.</p>
+            </div>
+            <div class="col-md-3">
+                <h6>Категории</h6>
+                <ul class="list-unstyled">
+                    <li>Рассылки</li>
+                    <li>Телеграм боты</li>
+                    <li>Полезные утилиты</li>
+                    <li>Веб-приложения</li>
+                    <li>Микросервисы</li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <h6>Дополнительно</h6>
+                <ul class="list-unstyled">
+                    <li>Мы пишем</li>
+                </ul>
+            </div>
+            <div class="col-md-2">
+                <h6>О нас</h6>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'contacts' %}" class="text-light text-decoration-none">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END FOOTER SECTION -->
+
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
