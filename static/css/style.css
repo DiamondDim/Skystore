@@ -1,0 +1,124 @@
+/* Элегантный шрифт Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    color: #3A402D;
+    background-color: #F7F9F4;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
+    color: #556B2F;
+    letter-spacing: 0.5px;
+}
+
+.navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 15px rgba(85, 107, 47, 0.05);
+    padding: 1rem 0;
+}
+
+.navbar-brand, .nav-link {
+    color: #556B2F !important;
+    font-weight: 400;
+    font-size: 1.05rem;
+}
+
+.nav-link:hover, .nav-link.active {
+    color: #8A9A5B !important;
+}
+
+.btn-primary {
+    background-color: #8A9A5B !important;
+    border-color: #8A9A5B !important;
+    font-weight: 400;
+    letter-spacing: 1px;
+    padding: 10px 24px;
+    border-radius: 4px;
+}
+
+.btn-primary:hover {
+    background-color: #6B8E23 !important;
+    border-color: #6B8E23 !important;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 4px 20px rgba(85, 107, 47, 0.08);
+    border-radius: 8px;
+}
+
+.card-title {
+    color: #556B2F;
+}
+
+.form-control {
+    border: 1px solid #D3D9C8;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.form-control:focus {
+    border-color: #8A9A5B;
+    box-shadow: 0 0 0 0.2rem rgba(138, 154, 91, 0.15);
+}
+
+footer {
+    background-color: #3A402D !important;
+    color: #F7F9F4 !important;
+    padding: 3rem 0;
+}
+
+footer h6 {
+    color: #F7F9F4 !important;
+    font-weight: 400;
+    margin-bottom: 1rem;
+}
+
+.contact-info-card {
+    background-color: #ffffff;
+    border-radius: 16px; /* Глубокое, мягкое скругление */
+    box-shadow: 0 8px 24px rgba(85, 107, 47, 0.06); /* Воздушная оливковая тень */
+    border: 1px solid #E8EDDF; /* Едва заметная рамка */
+    overflow: hidden; /* Чтобы содержимое не вылезало за скругления */
+    margin-bottom: 2rem;
+}
+
+.contact-info-card table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.contact-info-card td {
+    padding: 18px 24px;
+    border-bottom: 1px solid #F0F4E8; /* Тонкие разделители */
+    vertical-align: middle;
+    transition: background-color 0.3s ease;
+}
+
+.contact-info-card tr:last-child td {
+    border-bottom: none;
+}
+
+.contact-info-card tr:hover td {
+    background-color: #FAFCF7; /* Легкий оливковый отклик при наведении */
+}
+
+.contact-info-card td:first-child {
+    font-weight: 400;
+    color: #556B2F;
+    width: 35%;
+}
+
+.contact-info-card td:last-child {
+    font-weight: 300;
+    color: #3A402D;
+}
+
+/* Подготовка поля телефона для маски */
+#phone-input {
+    letter-spacing: 0.5px;
+}
