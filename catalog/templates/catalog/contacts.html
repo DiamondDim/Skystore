@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skystore — Контакты</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Наш кастомный оливковый стиль -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <!-- intl-tel-input CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+
+    <style>
+        /* Дополнительные стили для intl-tel-input */
+        .iti {
+            width: 100%;
+        }
+        .iti__flag-container {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">Skystore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/contacts/">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="container mt-5">
+        <div class="row g-5">
+            <!-- Левая колонка: Контактная информация в красивой карточке -->
+            <div class="col-md-5">
+                <h1 class="mb-4">Контакты</h1>
+                <div class="contact-info-card">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Страна:</td>
+                                <td>USA</td>
+                            </tr>
+                            <tr>
+                                <td>ИНН:</td>
+                                <td>91-1144442</td>
+                            </tr>
+                            <tr>
+                                <td>Адрес:</td>
+                                <td>Redmond, WA, 98052-6399</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Правая колонка: Форма обратной связи -->
+            <div class="col-md-7">
+                <h2 class="mb-4">Свяжитесь с нами</h2>
+                <form method="post" id="contact-form">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Как к вам обращаться?" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone-input" class="form-label">Телефон</label>
+                        <input type="tel" class="form-control" id="phone-input" name="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Опишите ваш запрос..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>SkyStore © 2023</h6>
+                    <p class="small">Skystore — это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Категории</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Рассылки</a></li>
+                        <li><a href="#" class="text-white-50">Телеграм боты</a></li>
+                        <li><a href="#" class="text-white-50">Полезные утилиты</a></li>
+                        <li><a href="#" class="text-white-50">Веб-приложения</a></li>
+                        <li><a href="#" class="text-white-50">Микросервисы</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Дополнительно</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Мы пишем</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>О нас</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contacts/" class="text-white-50">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- intl-tel-input JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+
+    <!-- Инициализация intl-tel-input -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('phone-input');
+            if (phoneInput) {
+                const iti = window.intlTelInput(phoneInput, {
+                    initialCountry: 'auto',
+                    geoIpLookup: function(callback) {
+                        // Определяем страну по IP через бесплатный сервис
+                        fetch('https://ipapi.co/json/')
+                            .then(res => res.json())
+                            .then(data => callback(data.country_code))
+                            .catch(() => callback('us'));
+                    },
+                    preferredCountries: ['us', 'gb', 'de', 'ru', 'ua', 'kz'],
+                    separateDialCode: true,
+                    utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js'
+                });
+
+                // При отправке формы добавляем полный номер с кодом страны
+                const form = document.getElementById('contact-form');
+                form.addEventListener('submit', function(e) {
+                    if (iti.isValidNumber()) {
+                        phoneInput.value = iti.getNumber();
+                    } else {
+                        e.preventDefault();
+                        alert('Пожалуйста, введите корректный номер телефона');
+                        phoneInput.focus();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

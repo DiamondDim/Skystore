@@ -1,0 +1,102 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skystore — Каталог</title>
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Наш кастомный оливковый стиль -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">Skystore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts/">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент -->
+    <main class="container mt-5">
+        <div class="row align-items-center">
+            <!-- Левая колонка с описанием -->
+            <div class="col-md-7">
+                <h1 class="display-4 mb-4">Skystore</h1>
+                <p class="lead">
+                    Skystore — это отличный вариант хранения ваших плагинов и примеров кода,
+                    который вы бы хотели продать.
+                </p>
+            </div>
+
+            <!-- Правая колонка с карточкой товара -->
+            <div class="col-md-5">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Удобный сервис рассылок</h5>
+                        <p class="card-text display-6">$ 140</p>
+                        <ul class="list-unstyled text-start">
+                            <li>✓ Неограниченная лицензия</li>
+                            <li>✓ Поддержка</li>
+                            <li>✓ Установка на сервер</li>
+                            <li>✓ Получение обновлений</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary w-100">Купить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>SkyStore © 2023</h6>
+                    <p class="small">Skystore — это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Категории</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Рассылки</a></li>
+                        <li><a href="#" class="text-white-50">Телеграм боты</a></li>
+                        <li><a href="#" class="text-white-50">Полезные утилиты</a></li>
+                        <li><a href="#" class="text-white-50">Веб-приложения</a></li>
+                        <li><a href="#" class="text-white-50">Микросервисы</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Дополнительно</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Мы пишем</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>О нас</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contacts/" class="text-white-50">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

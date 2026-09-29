@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skystore — Сообщение отправлено</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+    <!-- Навигация -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="/">Skystore</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contacts/">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Основной контент по центру -->
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8 text-center">
+                <div class="card p-5">
+                    <div class="card-body">
+                        <h1 class="mb-4">Спасибо, {{ name }}!</h1>
+                        <p class="lead mb-4">Ваше сообщение успешно получено. Мы скоро с вами свяжемся.</p>
+                        <a href="/" class="btn btn-primary">Вернуться на главную</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h6>SkyStore © 2023</h6>
+                    <p class="small">Skystore — это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать.</p>
+                </div>
+                <div class="col-md-3">
+                    <h6>Категории</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Рассылки</a></li>
+                        <li><a href="#" class="text-white-50">Телеграм боты</a></li>
+                        <li><a href="#" class="text-white-50">Полезные утилиты</a></li>
+                        <li><a href="#" class="text-white-50">Веб-приложения</a></li>
+                        <li><a href="#" class="text-white-50">Микросервисы</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>Дополнительно</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Мы пишем</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h6>О нас</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="/contacts/" class="text-white-50">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
