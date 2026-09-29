@@ -61,3 +61,4 @@ Skystore/
 ### © 2026 DiamondDim
 ## 📄 Лицензия MIT
 ##### Учебный проект для курса Python-разработки Skypro.
+
