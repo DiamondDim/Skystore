@@ -1,0 +1,44 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 7,
+  "fields": {
+    "name": "Веб-приложения",
+    "description": "Плагины и скрипты для веба"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 8,
+  "fields": {
+    "name": "Утилиты",
+    "description": "Полезные инструменты для разработчиков"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "name": "Скрипт парсинга",
+    "description": "Быстрый и надежный парсер",
+    "image": "",
+    "category": 8,
+    "price": "50.00",
+    "created_at": "2026-10-10T23:11:54.679Z",
+    "updated_at": "2026-10-10T23:11:54.679Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "name": "Сервис рассылок",
+    "description": "Отличный сервис для email",
+    "image": "",
+    "category": 7,
+    "price": "140.00",
+    "created_at": "2026-10-10T23:11:54.676Z",
+    "updated_at": "2026-10-10T23:11:54.676Z"
+  }
+}
+]
