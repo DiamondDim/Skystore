@@ -198,3 +198,12 @@ body {
     background-color: #556B2F;
     color: white;
 }
+
+.btn-outline-success {
+    color: #556B2F !important;
+    border-color: #556B2F !important;
+}
+.btn-outline-success:hover {
+    background-color: #556B2F !important;
+    color: white !important;
+}

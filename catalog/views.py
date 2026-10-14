@@ -1,7 +1,8 @@
 import re
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product
+from .forms import ProductAddForm
 
 
 def home(request):
@@ -11,11 +12,26 @@ def home(request):
     return render(request, 'catalog/home.html', context)
 
 
-def catalog_list(request, category_id=None):
-    """Страница каталога с возможностью фильтрации по категории."""
+def catalog_list(request, category_id=None, product_pk=None):
+    """
+    Страница каталога.
+    - Если передан product_pk -> показывает детальный вид одного товара (как заглушку для категории).
+    - Если передан category_id -> фильтрует по категории.
+    - Иначе -> показывает все товары или сообщение 'Обратитесь к администратору'.
+    """
+
+    # 1. Если кликнули по ссылке, ведущей на конкретный товар (Рассылки/Утилиты)
+    if product_pk:
+        try:
+            product = Product.objects.get(pk=product_pk)
+            # Рендерим шаблон детальной страницы, но через общий view каталога
+            return render(request, 'catalog/product_detail.html', {'product': product})
+        except Product.DoesNotExist:
+            pass
+
+            # 2. Стандартная логика каталога
     products = Product.objects.all()
 
-    # Если передан ID категории, фильтруем товары
     if category_id:
         products = products.filter(category_id=category_id)
 
@@ -59,3 +75,16 @@ def contacts(request):
         return render(request, 'catalog/success.html', {'name': name})
 
     return render(request, 'catalog/contacts.html')
+
+
+def add_product(request):
+    """Форма добавления нового товара с сохранением в БД."""
+    if request.method == 'POST':
+        form = ProductAddForm(request.POST, request.FILES)  # request.FILES нужен для загрузки картинок
+        if form.is_valid():
+            form.save()  # Сохраняем в БД
+            return redirect('catalog_list')  # Перенаправляем в каталог после успеха
+    else:
+        form = ProductAddForm()
+
+    return render(request, 'catalog/add_product.html', {'form': form})

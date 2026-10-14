@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Skystore{% endblock %}</title>
 
-    <!-- Подключаем Montserrat -->
+    <!-- Шрифт Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Bootstrap CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -25,7 +25,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Футер в твоем стиле -->
+    <!-- Футер в твоем оливковом стиле -->
     <footer class="bg-dark-olive text-white pt-5 pb-4 mt-auto">
         <div class="container">
             <div class="row gy-4">
@@ -35,21 +35,41 @@
                         Skystore — это отличный вариант хранения ваших плагинов и примеров кода, который вы бы хотели продать.
                     </p>
                 </div>
+
+                <!-- КАТЕГОРИИ: Ссылки ведут на конкретные товары или пустые страницы -->
                 <div class="col-md-3">
-                    <h6 class="fw-bold mb-3">Категории</h6><ul class="list-unstyled small text-white-50">
-                        <li class="mb-2"><a href="{% url 'catalog_by_category' 1 %}" class="text-decoration-none text-white-50 hover-text-white">Рассылки</a></li>
-                        <li class="mb-2"><a href="{% url 'catalog_by_category' 2 %}" class="text-decoration-none text-white-50 hover-text-white">Телеграм боты</a></li>
-                        <li class="mb-2"><a href="{% url 'catalog_by_category' 3 %}" class="text-decoration-none text-white-50 hover-text-white">Полезные утилиты</a></li>
-                        <li class="mb-2"><a href="{% url 'catalog_by_category' 4 %}" class="text-decoration-none text-white-50 hover-text-white">Веб-приложения</a></li>
-                    <li><a href="{% url 'catalog_by_category' 5 %}" class="text-decoration-none text-white-50 hover-text-white">Микросервисы</a></li>
-                </ul>
-            </div>
+                    <h6 class="fw-bold mb-3">Категории</h6>
+                    <ul class="list-unstyled small text-white-50">
+                        <!-- Рассылки -> Товар ID 1 -->
+                        <li class="mb-2">
+                            <a href="{% url 'catalog_product_link' 1 %}" class="text-decoration-none text-white-50 hover-text-white">Рассылки</a>
+                        </li>
+                        <!-- Телеграм боты -> Пустая категория (ID 99) -->
+                        <li class="mb-2">
+                            <a href="{% url 'catalog_by_category' 99 %}" class="text-decoration-none text-white-50 hover-text-white">Телеграм боты</a>
+                        </li>
+                        <!-- Полезные утилиты -> Товар ID 2 -->
+                        <li class="mb-2">
+                            <a href="{% url 'catalog_product_link' 2 %}" class="text-decoration-none text-white-50 hover-text-white">Полезные утилиты</a>
+                        </li>
+                        <!-- Веб-приложения -> Пустая категория (ID 98) -->
+                        <li class="mb-2">
+                            <a href="{% url 'catalog_by_category' 98 %}" class="text-decoration-none text-white-50 hover-text-white">Веб-приложения</a>
+                        </li>
+                        <!-- Микросервисы -> Пустая категория (ID 97) -->
+                        <li>
+                            <a href="{% url 'catalog_by_category' 97 %}" class="text-decoration-none text-white-50 hover-text-white">Микросервисы</a>
+                        </li>
+                    </ul>
+                </div>
+
                 <div class="col-md-2">
                     <h6 class="fw-bold mb-3">Дополнительно</h6>
                     <ul class="list-unstyled small text-white-50">
                         <li><a href="{% url 'catalog_list' %}" class="text-decoration-none text-white-50 hover-text-white">Мы пишем</a></li>
                     </ul>
                 </div>
+
                 <div class="col-md-3">
                     <h6 class="fw-bold mb-3">О нас</h6>
                     <ul class="list-unstyled small text-white-50">
