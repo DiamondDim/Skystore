@@ -1,0 +1,42 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ product.name }} — Skystore{% endblock %}
+
+{% block content %}
+<!-- Кнопка назад (Переход товар -> главная) -->
+<a href="{% url 'home' %}" class="btn btn-link text-decoration-none p-0 mb-4">
+    &larr; Вернуться в каталог
+</a>
+
+<div class="row g-5">
+    <div class="col-md-6">
+        <!-- Большое изображение -->
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ product.name }}">
+        {% else %}
+            <div class="bg-secondary-subtle rounded d-flex align-items-center justify-content-center" style="aspect-ratio: 1/1;">
+                <span class="text-muted fs-1">Нет изображения</span>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-md-6">
+        <h1 class="fw-bold">{{ product.name }}</h1>
+        <p class="text-muted mb-2">Категория: <strong>{{ product.category.name }}</strong></p>
+        
+        <hr>
+        
+        <div class="mb-4">
+            <span class="fs-3 fw-bold text-success">{{ product.price|floatformat:2 }} $</span>
+        </div>
+        
+        <h5 class="mt-4">Описание</h5>
+        <p class="lead">{{ product.description|default:"Подробное описание скоро появится." }}</p>
+        
+        <div class="mt-5 text-muted small">
+            <p><i class="bi bi-calendar-plus"></i> Создан: {{ product.created_at|date:"d M Y H:i" }}</p>
+            <p><i class="bi bi-arrow-repeat"></i> Обновлен: {{ product.updated_at|date:"d M Y H:i" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

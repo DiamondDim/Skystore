@@ -1,11 +1,33 @@
 import re
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404
+from .models import Product
 
 
 def home(request):
-    """Контроллер для главной страницы."""
-    return render(request, 'catalog/home.html')
+    """Главная страница: выводим список товаров."""
+    products = Product.objects.all()
+    context = {'products': products}
+    return render(request, 'catalog/home.html', context)
+
+
+def catalog_list(request, category_id=None):
+    """Страница каталога с возможностью фильтрации по категории."""
+    products = Product.objects.all()
+
+    # Если передан ID категории, фильтруем товары
+    if category_id:
+        products = products.filter(category_id=category_id)
+
+    context = {'products': products}
+    return render(request, 'catalog/catalog_list.html', context)
+
+
+def product_detail(request, pk):
+    """Страница конкретного товара (Задание 1)."""
+    """ Защита от несуществующего ID: вернет 404 вместо падения"""
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'catalog/product_detail.html', {'product': product})
 
 
 def contacts(request):
