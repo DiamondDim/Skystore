@@ -1,5 +1,6 @@
 from django import forms
 from .models import Product
+from django import forms
 
 class ProductAddForm(forms.ModelForm):
     class Meta:
@@ -19,3 +20,8 @@ class ProductAddForm(forms.ModelForm):
             'image': 'Изображение',
             'category': 'Категория',
         }
+
+class ContactForm(forms.Form):
+    name = forms.CharField(label='Ваше имя', max_length=100)
+    phone = forms.CharField(label='Телефон', max_length=20)
+    message = forms.CharField(label='Сообщение', widget=forms.Textarea)

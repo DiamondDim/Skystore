@@ -1,0 +1,32 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ post.title }} — Skystore{% endblock %}
+
+{% block content %}
+<div class="row g-5 align-items-start">
+    <div class="col-md-6">
+        {% if post.preview %}
+            <img src="{{ post.preview.url }}" class="img-fluid rounded shadow-sm" alt="{{ post.title }}">
+        {% else %}
+            <div class="bg-light-olive rounded d-flex align-items-center justify-content-center" style="height: 350px;">
+                <span class="text-muted">Нет превью</span>
+            </div>
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'post_list' %}" class="btn btn-outline-success btn-sm rounded-pill mb-4">← Назад к блогу</a>
+        <h1 class="text-olive-green mb-3">{{ post.title }}</h1>
+        <p class="text-muted mb-2">
+            <small>Создано: {{ post.created_at|date:"d M Y H:i" }} | 👁 {{ post.views_count }} просмотров</small>
+        </p>
+        <hr class="border-olive-subtle my-4">
+        <div class="lead" style="font-weight: 300; color: #3A402D;">
+            {{ post.content|linebreaks }}
+        </div>
+        <div class="mt-4">
+            <a href="{% url 'post_update' post.pk %}" class="btn btn-buy btn-sm">Редактировать</a>
+            <a href="{% url 'post_delete' post.pk %}" class="btn btn-outline-danger btn-sm">Удалить</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

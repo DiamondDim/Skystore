@@ -1,0 +1,43 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}Блог — Skystore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-olive-green mb-4">Блог</h1>
+    
+    <a href="{% url 'post_create' %}" class="btn btn-buy mb-4">+ Новая статья</a>
+    
+    {% if posts %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for post in posts %}
+        <div class="col">
+            <div class="card product-card h-100">
+                {% if post.preview %}
+                    <img src="{{ post.preview.url }}" class="card-img-top" style="height: 180px; object-fit: cover;" alt="{{ post.title }}">
+                {% else %}
+                    <div class="card-img-top bg-light-olive d-flex align-items-center justify-content-center" style="height: 180px;">
+                        <span class="text-muted small">Нет превью</span>
+                    </div>
+                {% endif %}
+                <div class="card-body d-flex flex-column p-4">
+                    <h5 class="card-title">{{ post.title }}</h5>
+                    <p class="card-text text-muted small flex-grow-1">
+                        {{ post.content|truncatechars:100 }}
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-olive-subtle">
+                        <small class="text-muted">👁 {{ post.views_count }}</small>
+                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-success btn-sm rounded-pill">Читать</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="alert alert-warning text-center bg-light-olive border-0 text-olive-green rounded-3">
+        Опубликованных статей пока нет.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -16,6 +16,9 @@
                     <a class="nav-link px-0 {% if request.resolver_match.url_name == 'catalog_list' %}active-nav{% endif %} text-olive-green" href="{% url 'catalog_list' %}">Каталог</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link px-0 {% if request.resolver_match.url_name == 'post_list' %}active-nav{% endif %} text-olive-green" href="{% url 'post_list' %}">Блог</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link px-0 {% if request.resolver_match.url_name == 'contacts' %}active-nav{% endif %} text-olive-green" href="{% url 'contacts' %}">Контакты</a>
                 </li>
             </ul>
