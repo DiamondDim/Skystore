@@ -37,6 +37,17 @@
 - **Умная навигация в футере**: категории «Рассылки» и «Полезные утилиты» ведут на карточки конкретных товаров, остальные категории показывают сообщение «Товаров пока нет. Обратитесь к администратору».
 - Двусторонние переходы: главная ↔ каталог ↔ товар.
 
+### Homework-25: Class-Based Views и Блог
+- **Перевод всех контроллеров приложения `catalog` с FBV на CBV**: `TemplateView`, `ListView`, `DetailView`, `CreateView`, `FormView`.
+- **Создание приложения блога** с моделью `Post` (заголовок, содержимое, превью, дата создания, признак публикации, счётчик просмотров).
+- **Реализация полного CRUD для блога через CBV**: `PostListView`, `PostDetailView`, `PostCreateView`, `PostUpdateView`, `PostDeleteView`.
+- **Модификации контроллеров**:
+  - Фильтрация опубликованных статей (`get_queryset` в `PostListView`)
+  - Увеличение счётчика просмотров при открытии статьи (`get_object` в `PostDetailView`)
+  - Редирект на страницу статьи после редактирования (`get_success_url` в `PostUpdateView`)
+- **Интеграция блога в навигацию и футер**.
+- **Написание тестов для блога**.
+
 ## 🛠 Технологический стек
 
 - **Python** 3.13+
@@ -112,7 +123,7 @@ DEBUG=True
 │ ├── urls.py # Корневая маршрутизация
 │ ├── wsgi.py # WSGI-конфигурация
 │ └── asgi.py # ASGI-конфигурация
-── catalog/ # Основное приложение
+├── catalog/ # Основное приложение
 │ ├── management/commands/ # Кастомные команды (load_test_data)
 │ ├── fixtures/ # Фикстуры (initial_data.json)
 │ ├── migrations/ # Миграции БД
@@ -128,14 +139,28 @@ DEBUG=True
 │ │ └── success.html # Страница успеха
 │ ├── admin.py # Настройки админки
 │ ├── models.py # Модели Category и Product
-│ ├── forms.py # ModelForm для добавления товара
+│ ├── forms.py # ModelForm для добавления товара и контактов
 │ ├── urls.py # Маршруты приложения
-│ └── views.py # Контроллеры
+│ └── views.py # Контроллеры (CBV)
+├── blog/ # Приложение блога
+│ ├── migrations/ # Миграции БД
+│ ├── templates/blog/ # HTML-шаблоны блога
+│ │ ├── post_list.html # Список статей
+│ │ ├── post_detail.html # Детальная статья
+│ │ ├── post_form.html # Форма создания/редактирования
+│ │ └── post_confirm_delete.html # Подтверждение удаления
+│ ├── admin.py # Настройки админки
+│ ├── models.py # Модель Post
+│ ├── urls.py # Маршруты блога
+│ ├── views.py # Контроллеры блога (CBV)
+│ └── tests.py # Тесты для блога
 ├── media/products/ # Изображения товаров
+├── media/posts/ # Изображения статей
 ├── screenshots/ # Скриншоты выполнения заданий
+├── .env # Переменные окружения (не коммитится)
 ├── .env.example # Шаблон переменных окружения
 ├── .gitignore # Игнорируемые файлы
-── manage.py # Утилита управления Django
+├── manage.py # Утилита управления Django
 ├── pyproject.toml # Конфигурация Poetry
 └── README.md # Файл описания
 ```
@@ -150,6 +175,7 @@ DEBUG=True
 | `poetry run python manage.py load_test_data` | Загрузка тестовых данных |
 | `poetry run python manage.py dumpdata` | Экспорт данных в фикстуры |
 | `poetry run python manage.py runserver` | Запуск сервера разработки |
+| `poetry run python manage.py test blog` | Запуск тестов для блога |
 
 ## 👨‍💻 Автор
 
