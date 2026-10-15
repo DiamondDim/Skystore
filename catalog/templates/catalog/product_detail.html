@@ -1,0 +1,45 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}{{ product.name }} — Skystore{% endblock %}
+
+{% block content %}
+<div class="row g-5 align-items-start">
+    <!-- Левая колонка: изображение -->
+    <div class="col-md-6">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}" style="background: #F9FAF6;">
+        {% else %}
+            <div class="bg-light-olive rounded d-flex align-items-center justify-content-center" style="height: 350px;">
+                <span class="text-muted">Нет изображения</span>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Правая колонка: информация -->
+    <div class="col-md-6">
+        <!-- Кнопка назад в оливковом стиле -->
+        <a href="{% url 'catalog_list' %}" class="btn btn-outline-success btn-sm rounded-pill mb-4">
+            ← Вернуться в каталог
+        </a>
+
+        <!-- Заголовок в оливковом цвете -->
+        <h1 class="text-olive-green mb-3">{{ product.name }}</h1>
+        <p class="text-muted mb-2">Категория: <strong>{{ product.category.name }}</strong></p>
+
+        <hr class="border-olive-subtle my-4">
+
+        <!-- Цена в оливковом цвете через класс price-tag из style.css -->
+        <div class="price-tag mb-4" style="font-size: 2rem;">{{ product.price|floatformat:2 }} $</div>
+
+        <h5 class="text-olive-green mt-4">Описание</h5>
+        <p class="lead" style="font-weight: 300; color: #3A402D;">
+            {{ product.description|default:"Подробное описание скоро появится." }}
+        </p>
+
+        <div class="mt-5 text-muted small">
+            <p class="mb-1"><i>Создан:</i> {{ product.created_at|date:"d M Y H:i" }}</p>
+            <p class="mb-0"><i>Обновлён:</i> {{ product.updated_at|date:"d M Y H:i" }}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

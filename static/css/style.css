@@ -122,3 +122,88 @@ footer h6 {
 #phone-input {
     letter-spacing: 0.5px;
 }
+
+/* === Оливковая тема Skystore === */
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #F9FAF6 !important; /* Светлый кремовый фон */
+    color: #333;
+}
+
+.bg-light-olive { background-color: #F9FAF6 !important; }
+.bg-dark-olive { background-color: #3A4D2E !important; } /* Темно-оливковый футер */
+.text-olive-green { color: #556B2F !important; }         /* Акцентный зеленый */
+.border-olive-subtle { border-color: #E8EDDF !important; }
+.hover-text-white:hover { color: #fff !important; transition: color 0.2s; }
+
+/* Стили навигации */
+.navbar-brand { letter-spacing: 0.5px; }
+.active-nav {
+    font-weight: 600;
+    border-bottom: 2px solid #556B2F;
+}
+
+/* Карточки товаров (восстанавливаем старый вид) */
+.product-card {
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    background: #fff;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(85, 107, 47, 0.15);
+}
+.card-title {
+    color: #3A4D2E;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+.price-tag {
+    color: #556B2F;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+/* Кнопка "Купить" в оливковом стиле */
+.btn-buy {
+    background-color: #8A9A5B; /* Более светлый оливковый для кнопки */
+    color: white;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+.btn-buy:hover {
+    background-color: #556B2F;
+    color: white;
+    transform: scale(1.02);
+}
+
+/* Форма контактов */
+.form-control:focus {
+    border-color: #8A9A5B;
+    box-shadow: 0 0 0 0.2rem rgba(138, 154, 91, 0.25);
+}
+.btn-submit-contact {
+    background-color: #8A9A5B;
+    color: white;
+    border: none;
+    padding: 0.6rem 2rem;
+    border-radius: 4px;
+}
+.btn-submit-contact:hover {
+    background-color: #556B2F;
+    color: white;
+}
+
+.btn-outline-success {
+    color: #556B2F !important;
+    border-color: #556B2F !important;
+}
+.btn-outline-success:hover {
+    background-color: #556B2F !important;
+    color: white !important;
+}
