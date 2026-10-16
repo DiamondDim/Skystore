@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from . import views
+from .views import ProductUpdateView, ProductDeleteView
 
 urlpatterns = [
     # Главная
@@ -20,4 +21,8 @@ urlpatterns = [
 
     # Добавление товара
     path('add/', views.AddProductView.as_view(), name='add_product'),
+
+    # Редактирование и удаление товара (ИСПРАВЛЕНО: добавлено "s" для единообразия)
+    path('products/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
+    path('products/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
 ]
