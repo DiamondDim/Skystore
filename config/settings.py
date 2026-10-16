@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'catalog',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,17 @@ MAILERS = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+MAILERS = {
+    'default': {
+        'BACKEND': 'django.core.mail.backends.console.EmailBackend',  # Для тестов - вывод в консоль
+        # 'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',  # Для реальной отправки
+        # 'HOST': 'smtp.yandex.ru',
+        # 'PORT': 465,
+        # 'USE_SSL': True,
+        # 'USER': 'mecheny91@yandex.ru',
+        # 'PASSWORD': 'твой_пароль_приложения',
+    }
+}
+
+DEFAULT_FROM_EMAIL = 'skystore@example.com'

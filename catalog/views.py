@@ -1,90 +1,77 @@
 import re
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, FormView
 from .models import Product
-from .forms import ProductAddForm
+from .forms import ProductAddForm, ContactForm
 
 
-def home(request):
-    """Главная страница: выводим список товаров."""
-    products = Product.objects.all()
-    context = {'products': products}
-    return render(request, 'catalog/home.html', context)
+# 1. Главная страница
+class HomeView(TemplateView):
+    template_name = 'catalog/home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['products'] = Product.objects.all()
+        return context
 
 
-def catalog_list(request, category_id=None, product_pk=None):
-    """
-    Страница каталога.
-    - Если передан product_pk -> показывает детальный вид одного товара (как заглушку для категории).
-    - Если передан category_id -> фильтрует по категории.
-    - Иначе -> показывает все товары или сообщение 'Обратитесь к администратору'.
-    """
+# 2. Каталог товаров
+class CatalogListView(ListView):
+    model = Product
+    template_name = 'catalog/catalog_list.html'
+    context_object_name = 'products'
 
-    # 1. Если кликнули по ссылке, ведущей на конкретный товар (Рассылки/Утилиты)
-    if product_pk:
-        try:
-            product = Product.objects.get(pk=product_pk)
-            # Рендерим шаблон детальной страницы, но через общий view каталога
-            return render(request, 'catalog/product_detail.html', {'product': product})
-        except Product.DoesNotExist:
-            pass
+    def get_queryset(self):
+        product_pk = self.kwargs.get('product_pk')
+        if product_pk:
+            try:
+                return [Product.objects.get(pk=product_pk)]
+            except Product.DoesNotExist:
+                return Product.objects.none()
 
-            # 2. Стандартная логика каталога
-    products = Product.objects.all()
-
-    if category_id:
-        products = products.filter(category_id=category_id)
-
-    context = {'products': products}
-    return render(request, 'catalog/catalog_list.html', context)
+        category_id = self.kwargs.get('category_id')
+        queryset = Product.objects.all()
+        if category_id:
+            queryset = queryset.filter(category_id=category_id)
+        return queryset
 
 
-def product_detail(request, pk):
-    """Страница конкретного товара (Задание 1)."""
-    """ Защита от несуществующего ID: вернет 404 вместо падения"""
-    product = get_object_or_404(Product, pk=pk)
-    return render(request, 'catalog/product_detail.html', {'product': product})
+# 3. Детальная страница товара
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
 
 
-def contacts(request):
-    """Контроллер для страницы контактов с обработкой POST-запроса."""
-    if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
-        phone = request.POST.get('phone', '').strip()
-        message = request.POST.get('message', '').strip()
+# 4. Форма контактов
+class ContactsView(FormView):
+    template_name = 'catalog/contacts.html'
+    form_class = ContactForm
+    success_url = '/contacts/success/'
 
-        # Валидация: имя и сообщение обязательны
+    def form_valid(self, form):
+        # Твоя кастомная валидация остается здесь
+        name = form.cleaned_data.get('name', '').strip()
+        phone = form.cleaned_data.get('phone', '').strip()
+        message = form.cleaned_data.get('message', '').strip()
+
         if not name or not message:
             return HttpResponse("Пожалуйста, заполните имя и сообщение.", status=400)
 
-        # Валидация международного номера телефона
-        # Принимает форматы: +1 234-567-8900, +44 20 7946 0958, +7 999 123-45-67 и т.д.
         phone_pattern = r'^\+\d{1,3}[\s\-()]{0,3}\d{3,14}$'
-
         if not phone or not re.match(phone_pattern, phone):
             return HttpResponse(
-                "Неверный формат телефона. Пожалуйста, используйте международный формат "
-                "(например: +1 234-567-8900 или +44 20 7946 0958).",
+                "Неверный формат телефона. Используйте международный формат.",
                 status=400
             )
 
-        # Логируем в консоль для отладки
         print(f"📩 Новое сообщение от {name} ({phone}): {message}")
-
-        # Рендерим страницу успеха
-        return render(request, 'catalog/success.html', {'name': name})
-
-    return render(request, 'catalog/contacts.html')
+        return super().form_valid(form)
 
 
-def add_product(request):
-    """Форма добавления нового товара с сохранением в БД."""
-    if request.method == 'POST':
-        form = ProductAddForm(request.POST, request.FILES)  # request.FILES нужен для загрузки картинок
-        if form.is_valid():
-            form.save()  # Сохраняем в БД
-            return redirect('catalog_list')  # Перенаправляем в каталог после успеха
-    else:
-        form = ProductAddForm()
-
-    return render(request, 'catalog/add_product.html', {'form': form})
+# 5. Добавление товара
+class AddProductView(CreateView):
+    model = Product
+    form_class = ProductAddForm
+    template_name = 'catalog/add_product.html'
+    success_url = '/catalog/'

@@ -24,7 +24,7 @@ from config import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('catalog.urls')),
-    path('products/<int:pk>/', views.product_detail, name='product_detail'),
+    path('blogs/', include('blog.urls')),
 ]
 
 if settings.DEBUG:
