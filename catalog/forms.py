@@ -70,6 +70,26 @@ class ProductAddForm(forms.ModelForm):
             raise ValidationError("Цена продукта не может быть отрицательной. Проверьте вводимые данные.")
         return price
 
+    def clean_image(self):
+        """Допзадание: Валидация изображения"""
+        image = self.cleaned_data.get('image')
+        if image:
+            # Проверка формата
+            valid_formats = ['image/jpeg', 'image/png']
+            if image.content_type not in valid_formats:
+                raise ValidationError(
+                    "Недопустимый формат изображения. Разрешены только JPEG и PNG."
+                )
+
+            # Проверка размера (5MB = 5 * 1024 * 1024 bytes)
+            max_size = 5 * 1024 * 1024
+            if image.size > max_size:
+                raise ValidationError(
+                    f"Размер файла превышает 5MB (текущий размер: {image.size / 1024 / 1024:.2f}MB)"
+                )
+
+        return image
+
 
 class ContactForm(forms.Form):
     name = forms.CharField(label='Ваше имя', max_length=100)
