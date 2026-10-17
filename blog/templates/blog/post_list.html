@@ -6,8 +6,6 @@
 <div class="container py-5">
     <h1 class="text-olive-green mb-4">Блог</h1>
     
-    <a href="{% url 'post_create' %}" class="btn btn-buy mb-4">+ Новая статья</a>
-    
     {% if posts %}
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for post in posts %}
