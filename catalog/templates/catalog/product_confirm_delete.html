@@ -1,0 +1,40 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}
+    Удаление товара — Skystore
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background-color: #3d4f31; color: white;">
+                    <h4 class="mb-0">Подтверждение удаления</h4>
+                </div>
+                <div class="card-body">
+                    <p class="fs-5">
+                        Вы уверены, что хотите удалить товар 
+                        <strong>"{{ object.name }}"</strong>?
+                    </p>
+                    <p class="text-muted">
+                        Это действие нельзя отменить. Товар будет удалён безвозвратно.
+                    </p>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-danger">
+                                Да, удалить товар
+                            </button>
+                            <a href="{% url 'catalog_list' %}" class="btn btn-outline-secondary">
+                                Отмена
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

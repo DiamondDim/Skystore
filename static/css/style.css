@@ -207,3 +207,18 @@ body {
     background-color: #556B2F !important;
     color: white !important;
 }
+
+.btn-outline-olive {
+    border: 2px solid #8A9A5B;
+    color: #8A9A5B;
+    background: transparent;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-olive:hover {
+    background: #8A9A5B;
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(138, 154, 91, 0.3);
+}
