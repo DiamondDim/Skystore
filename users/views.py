@@ -1,10 +1,12 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm, UserProfileForm
+from .models import CustomUser
 
 
 class RegisterView(CreateView):
@@ -28,7 +30,7 @@ class RegisterView(CreateView):
 
         try:
             send_mail(subject, message, from_email, recipient_list, fail_silently=False)
-            print(f"✅ Приветственное письмо отправлено на {user.email}")
+            print(f"✅ Приветственное письмо успешно сформировано для: {user.email}")
         except Exception as e:
             print(f"❌ Ошибка отправки письма: {e}")
 
@@ -40,10 +42,22 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
-    template_name = 'users/logged_out.html'
-    http_method_names = ['get', 'post']
 
-    def get(self, request, *args, **kwargs):
-        from django.contrib.auth import logout
-        logout(request)
-        return super().get(request, *args, **kwargs)
+    pass
+
+
+class GoodbyeView(TemplateView):
+    # Это представление просто отрисовывает красивую страницу прощания
+    template_name = 'users/logged_out.html'
+
+
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    """Представление для редактирования профиля пользователя"""
+    model = CustomUser
+    form_class = UserProfileForm
+    template_name = 'users/profile_edit.html'
+    success_url = reverse_lazy('home')
+
+    def get_object(self, queryset=None):
+        # Возвращаем текущего пользователя
+        return self.request.user

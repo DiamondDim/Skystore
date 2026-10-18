@@ -1,7 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.core.exceptions import ValidationError
-from django.core.validators import RegexValidator
 from .models import CustomUser
 
 
@@ -53,3 +52,20 @@ class CustomAuthenticationForm(AuthenticationForm):
             'placeholder': 'Пароль'
         })
     )
+
+
+class UserProfileForm(forms.ModelForm):
+    """Форма для редактирования профиля пользователя"""
+
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'username', 'first_name', 'last_name', 'avatar', 'phone_number', 'country']
+        widgets = {
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
+            'country': forms.TextInput(attrs={'class': 'form-control'}),
+            'avatar': forms.FileInput(attrs={'class': 'form-control'}),
+        }

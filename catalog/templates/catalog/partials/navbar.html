@@ -31,8 +31,9 @@
                     <a href="{% url 'post_create' %}" class="btn btn-outline-olive rounded-pill px-4 py-2">
                         + Новая статья
                     </a>
-
-                    <!-- Безопасный выход через POST-запрос -->
+                    <a href="{% url 'profile_edit' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                        Профиль
+                    </a>
                     <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-outline-secondary rounded-pill px-4 py-2">
