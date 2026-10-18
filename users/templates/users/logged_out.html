@@ -1,0 +1,59 @@
+{% extends 'catalog/base.html' %}
+
+{% block title %}До свидания — Skystore{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card shadow-sm border-0 p-5">
+                <h2 class="text-olive-green mb-4" style="font-weight: 600;">До свидания!</h2>
+                <p class="lead text-muted mb-4">
+                    Спасибо, что воспользовались нашим сервисом.<br>
+                    Вы успешно завершили сеанс. Будем рады видеть вас снова!
+                </p>
+                <div class="d-flex gap-3 justify-content-center">
+                    <a href="{% url 'home' %}" class="btn btn-olive rounded-pill px-4 py-2">
+                        На главную
+                    </a>
+                    <a href="{% url 'login' %}" class="btn btn-outline-olive rounded-pill px-4 py-2">
+                        Войти снова
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn-olive {
+        background-color: #8A9A5B;
+        border-color: #8A9A5B;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-olive:hover {
+        background-color: #556B2F;
+        border-color: #556B2F;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(85, 107, 47, 0.3);
+    }
+    .btn-outline-olive {
+        border: 2px solid #8A9A5B;
+        color: #8A9A5B;
+        background: transparent;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    .btn-outline-olive:hover {
+        background: #8A9A5B;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(138, 154, 91, 0.3);
+    }
+</style>
+{% endblock %}
