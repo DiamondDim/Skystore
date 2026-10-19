@@ -203,7 +203,7 @@ DEBUG=True
 ├── .env.example # Шаблон переменных окружения
 ├── .gitignore # Игнорируемые файлы
 ├── manage.py # Утилита управления Django
-── pyproject.toml # Конфигурация Poetry
+├── pyproject.toml # Конфигурация Poetry
 └── README.md # Файл описания проекта
 ```
 </details>
