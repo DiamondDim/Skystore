@@ -23,7 +23,7 @@
                                 </div>
                             {% endif %}
                         </div>
-                        
+
                         <div class="mb-3">
                             <label for="{{ form.password.id_for_label }}" class="form-label fw-semibold">Пароль</label>
                             {{ form.password }}
@@ -33,7 +33,7 @@
                                 </div>
                             {% endif %}
                         </div>
-                        
+
                         {% if form.non_field_errors %}
                             <div class="alert alert-danger">
                                 {% for error in form.non_field_errors %}
@@ -41,10 +41,10 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
-                        
+
                         <button type="submit" class="btn btn-olive w-100">Войти</button>
                     </form>
-                    
+
                     <div class="text-center mt-3">
                         <p class="mb-0">Еще нет аккаунта? <a href="{% url 'register' %}" class="text-olive-green">Зарегистрироваться</a></p>
                     </div>
@@ -60,7 +60,7 @@
     .bg-olive {
         background-color: #556B2F !important;
     }
-    
+
     .btn-olive {
         background-color: #8A9A5B;
         border-color: #8A9A5B;
@@ -69,7 +69,7 @@
         padding: 0.75rem;
         transition: all 0.3s ease;
     }
-    
+
     .btn-olive:hover {
         background-color: #556B2F;
         border-color: #556B2F;
@@ -77,14 +77,14 @@
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(85, 107, 47, 0.3);
     }
-    
+
     .form-control {
         border: 1px solid #dee2e6;
         border-radius: 8px;
         padding: 0.75rem 1rem;
         transition: all 0.3s ease;
     }
-    
+
     .form-control:focus {
         border-color: #8A9A5B;
         box-shadow: 0 0 0 0.2rem rgba(138, 154, 91, 0.25);
