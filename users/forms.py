@@ -38,8 +38,17 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
+    """
+    Форма авторизации по email.
+
+    Примечание: Поле называется 'username' для совместимости с Django
+    AuthenticationForm и методом authenticate(). Однако тип поля - EmailField,
+    а label - 'Email', поэтому визуально и функционально это авторизация по email.
+    В модели CustomUser установлено USERNAME_FIELD = 'email', поэтому Django
+    автоматически использует email для поиска пользователя.
+    """
     username = forms.EmailField(
-        label='Email',
+        label='Email',  # Визуально отображается как "Email"
         widget=forms.EmailInput(attrs={
             'class': 'form-control',
             'placeholder': 'your@email.com'
