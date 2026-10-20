@@ -1,36 +1,53 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg bg-transparent py-4 border-bottom border-olive-subtle">
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-        <!-- Логотип слева -->
-        <a class="navbar-brand fs-4 fw-semibold text-olive-green" href="{% url 'home' %}">Skystore</a>
+        <a class="navbar-brand text-olive-green fw-bold" href="{% url 'home' %}">Skystore</a>
 
-        <!-- Кнопка гамбургер для мобильных -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Центральная часть: ссылки меню -->
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mx-auto gap-lg-4">
+            <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                    <a class="nav-link px-0 {% if request.resolver_match.url_name == 'catalog_list' %}active-nav{% endif %} text-olive-green" href="{% url 'catalog_list' %}">Каталог</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'catalog_list' %}active-nav{% endif %}"
+                       href="{% url 'catalog_list' %}">Каталог</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-0 {% if request.resolver_match.url_name == 'post_list' %}active-nav{% endif %} text-olive-green" href="{% url 'post_list' %}">Блог</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'post_list' %}active-nav{% endif %}"
+                       href="{% url 'post_list' %}">Блог</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link px-0 {% if request.resolver_match.url_name == 'contacts' %}active-nav{% endif %} text-olive-green" href="{% url 'contacts' %}">Контакты</a>
+                    <a class="nav-link {% if request.resolver_match.url_name == 'contacts' %}active-nav{% endif %}"
+                       href="{% url 'contacts' %}">Контакты</a>
                 </li>
             </ul>
 
-            <!-- Правая часть: кнопка добавления товара -->
-            <div class="d-flex">
-                <a href="{% url 'add_product' %}" class="btn btn-buy btn-sm rounded-pill px-4 py-2">
-                    + Добавить продукт
-                </a>
-                <a href="{% url 'post_create' %}" class="btn btn-outline-olive rounded-pill px-4 py-2">
-                    + Новая статья
-                </a>
+            <div class="d-flex gap-2 align-items-center">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_product' %}" class="btn btn-buy rounded-pill px-4 py-2">
+                        + Добавить продукт
+                    </a>
+                    <a href="{% url 'post_create' %}" class="btn btn-outline-olive rounded-pill px-4 py-2">
+                        + Новая статья
+                    </a>
+                    <a href="{% url 'profile_edit' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                        Профиль
+                    </a>
+                    <form method="post" action="{% url 'logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                            Выход
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-buy rounded-pill px-4 py-2">
+                        Войти
+                    </a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-olive rounded-pill px-4 py-2">
+                        Регистрация
+                    </a>
+                {% endif %}
             </div>
         </div>
     </div>

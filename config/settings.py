@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     'catalog',
     'blog',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -133,25 +134,25 @@ STATICFILES_DIRS = [
 # Email
 # https://docs.djangoproject.com/en/6.1/topics/email/#topic-email-configuration
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',
-    },
-}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Блок для реальной отправки.
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.yandex.ru'
+# EMAIL_PORT = 465
+# EMAIL_USE_SSL = True
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'mecheny91@yandex.ru')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD') # Пароль приложения из .env
+
+DEFAULT_FROM_EMAIL = 'skystore@example.com'
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-MAILERS = {
-    'default': {
-        'BACKEND': 'django.core.mail.backends.console.EmailBackend',  # Для тестов - вывод в консоль
-        # 'BACKEND': 'django.core.mail.backends.smtp.EmailBackend',  # Для реальной отправки
-        # 'HOST': 'smtp.yandex.ru',
-        # 'PORT': 465,
-        # 'USE_SSL': True,
-        # 'USER': 'mecheny91@yandex.ru',
-        # 'PASSWORD': 'твой_пароль_приложения',
-    }
-}
 
-DEFAULT_FROM_EMAIL = 'skystore@example.com'
+# Настройки для редиректов
+AUTH_USER_MODEL = 'users.CustomUser'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'logged_out'
