@@ -4,40 +4,119 @@
 
 {% block content %}
 <div class="container py-5">
-    <h1 class="text-olive-green mb-4 pb-2 border-bottom border-olive-subtle d-inline-block">Каталог товаров</h1>
-    
-    {% if products %}
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
-        {% for product in products %}
-        <div class="col">
-            <div class="card product-card h-100">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" class="card-img-top" style="height: 180px; object-fit: cover;" alt="{{ product.name }}">
-                {% else %}
-                    <div class="card-img-top bg-light-olive d-flex align-items-center justify-content-center" style="height: 180px;">
-                        <span class="text-muted small">Нет фото</span>
-                    </div>
-                {% endif %}
-                
-                <div class="card-body d-flex flex-column p-4">
-                    <h5 class="card-title">{{ product.name }}</h5>
-                    <p class="card-text text-muted small flex-grow-1 mb-3">
-                        {{ product.description|default:"Описание отсутствует."|truncatechars:80 }}
-                    </p>
-                    
-                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-olive-subtle">
-                        <span class="price-tag">${{ product.price|floatformat:0 }}</span>
-                        <a href="{% url 'product_detail' product.pk %}" class="btn btn-outline-success btn-sm rounded-pill">Подробнее</a>
-                    </div>
+    <div class="row">
+        <!-- Боковая панель с категориями -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-header bg-olive py-3">
+                    <h5 class="mb-0 fw-bold" style="color: white !important;">Категории</h5>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item {% if not current_category %}active{% endif %}">
+                            <a href="{% url 'catalog_list' %}" class="text-decoration-none {% if not current_category %}text-white{% else %}text-olive-green{% endif %}">
+                                Все товары
+                            </a>
+                        </li>
+                        {% for category in categories %}
+                            <li class="list-group-item {% if current_category and current_category.pk == category.pk %}active{% endif %}">
+                                <a href="{% url 'catalog_by_category' category.pk %}" class="text-decoration-none {% if current_category and current_category.pk == category.pk %}text-white{% else %}text-olive-green{% endif %}">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
         </div>
-        {% endfor %}
+
+        <!-- Основной контент -->
+        <div class="col-md-9">
+            <h2 class="mb-4 text-olive-green fw-bold">
+                {% if current_category %}
+                    {{ current_category.name }}
+                {% else %}
+                    Каталог товаров
+                {% endif %}
+            </h2>
+
+            {% if products %}
+                <div class="row">
+                    {% for product in products %}
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 {% if not product.is_published %}border-warning bg-light{% endif %}">
+                                {% if product.image %}
+                                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                                {% else %}
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                        <span class="text-muted">Нет фото</span>
+                                    </div>
+                                {% endif %}
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ product.name }}</h5>
+                                    <p class="card-text">{{ product.description|default:"Описание отсутствует."|truncatechars:80 }}</p>
+                                    <p class="card-text"><strong>${{ product.price|floatformat:0 }}</strong></p>
+
+                                    {% if not product.is_published %}
+                                        <span class="badge bg-warning text-dark mb-2">⏳ На модерации</span>
+                                    {% endif %}
+
+                                    <br>
+                                    <a href="{% url 'product_detail' product.pk %}" class="btn btn-olive btn-sm">Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">В этой категории товаров пока нет.</div>
+            {% endif %}
+        </div>
     </div>
-    {% else %}
-    <div class="alert alert-warning text-center bg-light-olive border-0 text-olive-green rounded-3 mt-5">
-        Товаров пока нет. Обратитесь к администратору.
-    </div>
-    {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .bg-olive {
+        background-color: #556B2F !important;
+    }
+
+    .text-olive-green {
+        color: #556B2F !important;
+    }
+
+    .btn-olive {
+        background-color: #8A9A5B;
+        border-color: #8A9A5B;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-olive:hover {
+        background-color: #556B2F;
+        border-color: #556B2F;
+        color: white;
+    }
+
+    .list-group-item.active {
+        background-color: #8A9A5B !important;
+        border-color: #8A9A5B !important;
+    }
+
+    .list-group-item a {
+        color: #556B2F !important;
+    }
+
+    .list-group-item.active a {
+        color: white !important;
+    }
+
+    .list-group-item a:hover {
+        color: #556B2F !important;
+        font-weight: 600;
+    }
+</style>
 {% endblock %}

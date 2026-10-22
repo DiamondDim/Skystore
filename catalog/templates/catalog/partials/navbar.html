@@ -32,7 +32,7 @@
                         + Новая статья
                     </a>
                     <a href="{% url 'profile_edit' %}" class="btn btn-outline-secondary rounded-pill px-4 py-2">
-                        Профиль
+                        {{ user.username }}
                     </a>
                     <form method="post" action="{% url 'logout' %}" class="d-inline">
                         {% csrf_token %}
