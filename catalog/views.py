@@ -23,7 +23,7 @@ class CatalogListView(ListView):
     context_object_name = 'products'
 
     def get_queryset(self):
-        # Базовый queryset: все продукты
+        # Базовый queryset: ВСЕ продукты
         queryset = Product.objects.all()
 
         # Фильтрация по категории (если передан параметр category_id)
