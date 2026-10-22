@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from . import views
 from .views import ProductUpdateView, ProductDeleteView
 
+
 urlpatterns = [
     # Главная
     path('', views.HomeView.as_view(), name='home'),
@@ -25,4 +26,6 @@ urlpatterns = [
     # Редактирование и удаление товара (ИСПРАВЛЕНО: добавлено "s" для единообразия)
     path('products/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
     path('products/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
+
+    path('product/<int:pk>/publish/', views.PublishProductView.as_view(), name='publish_product'),
 ]

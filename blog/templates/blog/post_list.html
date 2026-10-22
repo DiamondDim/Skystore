@@ -4,38 +4,62 @@
 
 {% block content %}
 <div class="container py-5">
-    <h1 class="text-olive-green mb-4">Блог</h1>
-    
+    <h2 class="mb-4 text-olive-green fw-bold">Блог</h2>
+
     {% if posts %}
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {% for post in posts %}
-        <div class="col">
-            <div class="card product-card h-100">
-                {% if post.preview %}
-                    <img src="{{ post.preview.url }}" class="card-img-top" style="height: 180px; object-fit: cover;" alt="{{ post.title }}">
-                {% else %}
-                    <div class="card-img-top bg-light-olive d-flex align-items-center justify-content-center" style="height: 180px;">
-                        <span class="text-muted small">Нет превью</span>
-                    </div>
-                {% endif %}
-                <div class="card-body d-flex flex-column p-4">
-                    <h5 class="card-title">{{ post.title }}</h5>
-                    <p class="card-text text-muted small flex-grow-1">
-                        {{ post.content|truncatechars:100 }}
-                    </p>
-                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top border-olive-subtle">
-                        <small class="text-muted">👁 {{ post.views_count }}</small>
-                        <a href="{% url 'post_detail' post.pk %}" class="btn btn-outline-success btn-sm rounded-pill">Читать</a>
+        <div class="row">
+            {% for post in posts %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 {% if not post.is_published %}border-warning bg-light{% endif %}">
+                        {% if post.preview %}
+                            <img src="{{ post.preview.url }}" class="card-img-top" alt="{{ post.title }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-muted">Нет превью</span>
+                            </div>
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h5 class="card-title">{{ post.title }}</h5>
+                            <p class="card-text">{{ post.content|truncatechars:100 }}</p>
+
+                            {% if not post.is_published %}
+                                <span class="badge bg-warning text-dark mb-2">⏳ На модерации</span>
+                            {% endif %}
+
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <small class="text-muted"> {{ post.views_count }}</small>
+                                <a href="{% url 'post_detail' post.pk %}" class="btn btn-olive btn-sm">Читать</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-    </div>
     {% else %}
-    <div class="alert alert-warning text-center bg-light-olive border-0 text-olive-green rounded-3">
-        Опубликованных статей пока нет.
-    </div>
+        <div class="alert alert-info">Статей пока нет.</div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-olive-green {
+        color: #556B2F !important;
+    }
+
+    .btn-olive {
+        background-color: #8A9A5B;
+        border-color: #8A9A5B;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-olive:hover {
+        background-color: #556B2F;
+        border-color: #556B2F;
+        color: white;
+    }
+</style>
 {% endblock %}

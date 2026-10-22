@@ -5,7 +5,7 @@ from .models import Post
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'content', 'preview', 'is_published']
+        fields = ['title', 'content', 'preview',]
         labels = {
             'title': 'Заголовок',
             'content': 'Содержимое',

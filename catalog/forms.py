@@ -71,22 +71,20 @@ class ProductAddForm(forms.ModelForm):
         return price
 
     def clean_image(self):
-        """Допзадание: Валидация изображения"""
+        """Валидация загружаемого изображения"""
         image = self.cleaned_data.get('image')
-        if image:
-            # Проверка формата
-            valid_formats = ['image/jpeg', 'image/png']
-            if image.content_type not in valid_formats:
-                raise ValidationError(
-                    "Недопустимый формат изображения. Разрешены только JPEG и PNG."
-                )
 
-            # Проверка размера (5MB = 5 * 1024 * 1024 bytes)
-            max_size = 5 * 1024 * 1024
-            if image.size > max_size:
-                raise ValidationError(
-                    f"Размер файла превышает 5MB (текущий размер: {image.size / 1024 / 1024:.2f}MB)"
-                )
+        # Если изображение не менялось (редактирование без загрузки нового файла)
+        if image is None or not hasattr(image, 'content_type'):
+            return image  # Возвращаем как есть, валидация не нужна
+
+        # Проверка MIME-типа
+        if image.content_type not in ['image/jpeg', 'image/png']:
+            raise ValidationError('Допустимые форматы изображений: JPEG и PNG.')
+
+        # Проверка размера (5 МБ)
+        if image.size > 5 * 1024 * 1024:
+            raise ValidationError('Размер изображения не должен превышать 5 МБ.')
 
         return image
 
