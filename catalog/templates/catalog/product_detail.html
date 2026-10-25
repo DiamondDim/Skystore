@@ -3,57 +3,116 @@
 {% block title %}{{ product.name }} — Skystore{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <div class="row">
-        <!-- Левая колонка: Изображение -->
-        <div class="col-md-6">
-            {% if product.image %}
-                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="img-fluid rounded" style="border: 1px solid #e9ecef;">
-            {% else %}
-                <div class="bg-light rounded d-flex align-items-center justify-content-center" style="height: 400px; color: #6c757d;">
-                    <span class="fs-4">Нет изображения</span>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card shadow-sm border-0">
+                <div class="row g-0">
+                    <!-- Левая колонка: изображение -->
+                    <div class="col-md-5">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="img-fluid rounded-start h-100" alt="{{ product.name }}" style="object-fit: cover; width: 100%; height: 100%; min-height: 300px;">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-light h-100" style="min-height: 300px;">
+                                <span class="text-muted">Нет изображения</span>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Правая колонка: описание -->
+                    <div class="col-md-7">
+                        <div class="card-body p-4">
+                            <h2 class="card-title text-olive-green fw-bold mb-3">{{ product.name }}</h2>
+
+                            <p class="text-muted mb-2">
+                                <strong>Категория:</strong> {{ product.category.name }}
+                            </p>
+
+                            <h3 class="text-olive-green mb-3">{{ product.price|floatformat:2 }} $ </h3>
+
+                            <div class="mb-4">
+                                <h5 class="fw-semibold">Описание</h5>
+                                <p class="text-muted">{{ product.description|default:"Подробное описание скоро появится."|linebreaks }}</p>
+                            </div>
+
+                            {% if product.owner %}
+                                <p class="text-muted small mb-4">
+                                    <strong>Владелец:</strong> {{ product.owner.username }}
+                                </p>
+                            {% endif %}
+
+                            <a href="{% url 'catalog_list' %}" class="btn btn-outline-secondary mb-3">
+                                ← Вернуться в каталог
+                            </a>
+
+                            <!-- Кнопки управления для владельца или модератора -->
+                            {% if user.is_authenticated and user == product.owner or perms.catalog.delete_product %}
+                                <div class="d-flex gap-2">
+                                    <a href="{% url 'product_update' product.pk %}" class="btn btn-olive">
+                                        ✏️ Редактировать
+                                    </a>
+                                    <form method="post" action="{% url 'product_delete' product.pk %}" class="d-inline">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Вы уверены, что хотите удалить этот продукт?')">
+                                            🗑️ Удалить
+                                        </button>
+                                    </form>
+                                </div>
+                            {% endif %}
+
+                            <!-- Кнопка публикации ТОЛЬКО для модераторов и админов -->
+                            {% if perms.catalog.can_unpublish_product or user.is_staff %}
+                                {% if not product.is_published %}
+                                    <div class="mt-3">
+                                        <form method="post" action="{% url 'publish_product' product.pk %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-success w-100">
+                                                ✅ Одобрить и Опубликовать
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
-            {% endif %}
-        </div>
-
-        <!-- Правая колонка: Информация -->
-        <div class="col-md-6">
-            <!-- Кнопки действий вверху -->
-            <div class="d-flex gap-2 mb-4">
-                <a href="{% url 'catalog_list' %}" class="btn btn-outline-secondary btn-sm">
-                    ← Вернуться в каталог
-                </a>
-                <a href="{% url 'product_update' product.pk %}" class="btn btn-sm" style="background-color: #8a9a5b; color: white; border: none;">
-                    ✏️ Редактировать
-                </a>
-                <a href="{% url 'product_delete' product.pk %}" class="btn btn-danger btn-sm">
-                    🗑️ Удалить
-                </a>
-            </div>
-
-            <!-- Название и категория -->
-            <h1 class="display-5 fw-bold" style="color: #3d4f31;">{{ product.name }}</h1>
-            <p class="text-muted">Категория: {{ product.category.name }}</p>
-
-            <hr>
-
-            <!-- Цена -->
-            <h2 class="fw-bold" style="color: #3d4f31;">{{ product.price|floatformat:2 }} $</h2>
-
-            <hr>
-
-            <!-- Описание -->
-            <h5 class="fw-bold">Описание</h5>
-            <p class="text-muted" style="line-height: 1.6;">
-                {{ product.description|default:"Подробное описание скоро появится."|linebreaks }}
-            </p>
-
-            <!-- Даты -->
-            <div class="mt-4 text-muted small">
-                <p class="mb-1">Создан: {{ product.created_at|date:"d M Y H:i" }}</p>
-                <p class="mb-0">Обновлён: {{ product.updated_at|date:"d M Y H:i" }}</p>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .text-olive-green {
+        color: #556B2F !important;
+    }
+
+    .btn-olive {
+        background-color: #8A9A5B;
+        border-color: #8A9A5B;
+        color: white;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-olive:hover {
+        background-color: #556B2F;
+        border-color: #556B2F;
+        color: white;
+    }
+
+    .card {
+        overflow: hidden;
+    }
+
+    @media (max-width: 768px) {
+        .card .row.g-0 {
+            flex-direction: column;
+        }
+        .col-md-5 img, .col-md-5 .d-flex {
+            min-height: 200px !important;
+        }
+    }
+</style>
 {% endblock %}
